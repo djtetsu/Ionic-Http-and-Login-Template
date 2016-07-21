@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<html ng-app="starter">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Sign-in, Then Tabs Example</title>
+<link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+<script src="lib/ionic/js/ionic.bundle.min.js"></script>
+<script src="lib/firebase/firebase.js"></script>
+<script src="lib/firebase/angularfire.min.js"></script>
+<script src="lib/encrypt/encrypt1.js"></script>
+<script src="lib/encrypt/encrypt2.js"></script>
+
+
+<!--
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+-->
+<script src="xxxcordova.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/services.js"></script>
+
+</head>
+
+<body>
+
+<ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="button-icon ion-arrow-left-c">
+    </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view></ion-nav-view>
+
+
+<script id="templates/login.html" type="text/ng-template">
+    <ion-view view-title="Log-In">
+        <ion-content padding="true">
+            <label class="item item-input">
+                <span class="input-label">Username</span>
+                <input type="text" ng-model="data.email" placeholder="Email" ng-change="updateEmail()" value="s13racer@gmail.com">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="text" ng-model="data.password" placeholder="Password" ng-change="updatePassword()">
+            </label>
+            <div class="padding">
+                <button class="button button-block button-positive" ng-click="login()">
+                    Log-In
+                </button>
+            </div>
+            <p class="text-center">
+                <!--
+                <a href="#/forgot-password">Forgot password</a>
+                -->
+                <a href="#/register">Register</a>
+            </p>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+<script id="templates/forgot-password.html" type="text/ng-template">
+    <ion-view view-title="Forgot Password">
+        <ion-content padding="true">
+            <p>
+                Yeah this is just a demo showing how views can be shown without tabs, then you can navigate
+                to views within tabs. Additionally, only one set of tabs needs to be written for all of the different views that should go inside the tabs. (Compared to written the same tab links in the footer of every view that's in a tab.)
+            </p>
+
+            <p>
+                Return to <a href="#/login">Log-In</a>.
+            </p>
+            <p class="text-center">
+
+                <a href="#/register">Register</a>
+            </p>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+
+
+<script id="templates/register.html" type="text/ng-template">
+    <ion-view view-title="Register">
+        <ion-content padding="true">
+            <label class="item item-input">
+                <span class="input-label">Username</span>
+                <input type="text" ng-model="data.email" placeholder="Email" ng-change="updateEmail()">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="text" ng-model="data.password" placeholder="Password" ng-change="updatePassword()">
+            </label>
+            <div class="padding">
+                <button class="button button-block button-positive" ng-click="CreateNewUser()">
+                    Register
+                </button>
+            </div>
+            <p class="text-center">
+
+                <a href="#/login">Log-In</a>
+            </p>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+
+<script id="templates/registerretry.html" type="text/ng-template">
+    <ion-view view-title="Register">
+        <ion-content padding="true">
+
+            <div class="padding">
+                <button class="button button-block button-positive" ng-click="CreateNewUser()">
+                    Please give it some time, come back, and press this button
+                </button>
+            </div>
+            <p class="text-center">
+
+                <a href="#/login">Log-In</a>
+            </p>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+<script id="templates/registersuccess.html" type="text/ng-template">
+    <ion-view view-title="Registered!">
+        <ion-content padding="true">
+            Thank you for registering, you will be receiving a confirmation email to activate your account!
+        </ion-content>
+    </ion-view>
+</script>
+
+
+<script id="templates/tab-answer.html" type="text/ng-template">
+    <ion-view view-title="Answer">
+        <ion-content padding="true">
+            <ion-refresher
+                    pulling-text="Pull to refresh..."
+                    on-refresh="doRefresh()">
+            </ion-refresher>
+            <div id="spinner1" style="text-align:center;">
+                <ion-spinner></ion-spinner>
+            </div>
+            <ion-list>
+                <ion-item  ng-repeat="md in metricsData" type="item-text-wrap"  >
+                    <!--<img ng-src="{{x.Name}}">-->
+                    <h2>{{md.metricText}}</h2>
+                    <!--<p>{{md.metric_id}}</p>-->
+
+                        <div ng-if="md.metricType==1">
+
+
+                                <span class="input-label" style="background-color:#fff;text-align:right;"> </span>
+
+
+                                <div class="list">
+                                    <div class="item range range-positive">
+                                        <span class="input-label" style="background-color:#fff;text-align:center;">No  </span>
+                                        <input  id="{{md.metric_id}}"  type="range" name="volume" min="0" max="1" value="0">
+                                        <span class="input-label" style="background-color:#fff;text-align:center;">  Yes</span>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                        </div>
+                        <div ng-if="md.metricType==2">
+
+                            <div class="list">
+                                <div class="item range range-positive">
+                                    <span class="input-label" style="background-color:#fff;text-align:center;">0 to 3</span>
+                                    <input  id="{{md.metric_id}}"  type="range" name="volume" min="0" max="3" value="0">
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div ng-if="md.metricType==10">
+
+                            <label class="item item-input">
+                                <span class="input-label" style="background-color:#fff;text-align:center;">Text</span>
+                                <input id="{{md.metric_id}}" type="text" style="background-color:#eee;margin-right:20px;padding-left:15px;">
+                            </label>
+
+                        </div>
+                        <div ng-if="md.metricType==5">
+
+
+                            <div class="list">
+                                <div class="item range range-positive">
+                                    <span class="input-label" style="background-color:#fff;text-align:center;">0 to 5</span>
+                                    <input  id="{{md.metric_id}}"  type="range" name="volume" min="0" max="5" value="0">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+
+                    <div ng-if="md.metricType==8">
+                        <label class="item item-input">
+                            <span class="input-label" style="background-color:#fff;text-align:center;">0 to 50</span>
+                            <input id="{{md.metric_id}}" type="tel" style="background-color:#eee;margin-right:20px;padding-left:15px;">
+                        </label>
+                    </div>
+                    <div ng-if="md.metricType==7">
+                        <label class="item item-input">
+                            <span class="input-label" style="background-color:#fff;text-align:center;">0 to 10</span>
+                            <input id="{{md.metric_id}}" type="tel" style="background-color:#eee;margin-right:20px;padding-left:15px;">
+                        </label>
+                    </div>
+                    <div ng-if="md.metricType==9">
+                        <label class="item item-input">
+                            <span class="input-label" style="background-color:#fff;text-align:center;">1 to 100</span>
+                            <input id="{{md.metric_id}}" type="tel" style="background-color:#eee;margin-right:20px;padding-left:15px;">
+                        </label>
+                    </div>
+                </ion-item>  <button class="button button-block button-positive" ng-click="answer(md)">
+                Record
+            </button>
+            </ion-list>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+
+
+
+<script id="templates/tab-addnew.html" type="text/ng-template">
+    <ion-view view-title="Add New">
+        <ion-content padding="true">
+            <label class="item item-input">
+                <span class="input-label">What do you want to measure?</span>
+                <input type="text" ng-model="md.metricText" placeholder="Metric Description"   >
+            </label>
+            <!--
+            <label class="item item-input">
+                <span class="input-label">ID?</span>
+                <input type="text" ng-model="md.metric_id" placeholder="Metric ID"   >
+            </label>
+            -->
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                     Metric Type
+                    </div>
+                    <select  ng-model="md.metricType" placeholder="Metric Type"   >
+                        <option value="1">Yes or No</option><option value="2">0 to 3</option>
+                        <option value="5">0 to 5</option><option value="7">0 to 10</option>
+                        <option value="8">0 to 50</option>
+                        <option value="9">1 to 100</option>
+                        <option value="10">Text</option>
+                    </select>
+
+
+        </label>
+            <div class="padding">
+                <button class="button button-block button-positive" ng-click="addnew(md)">
+                    Add
+                </button>
+            </div>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+
+
+
+<script id="templates/tab-edit.html" type="text/ng-template">
+    <ion-view view-title="Edit Items">
+        <ion-content padding="true">
+
+            <!--
+            <ion-refresher
+                    pulling-text="Pull to refresh..."
+                    on-refresh="doRefresh()">
+            </ion-refresher>
+
+            <div id="spinner" style="text-align:center;">
+                <ion-spinner></ion-spinner>
+            </div>
+            -->
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in itemsData" type="item-text-wrap"  >
+
+                    <h2>{{item.metricText}}</h2>
+
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+
+                    <ion-option-button class="button-assertive" ng-click="remove(item)" >
+                        Delete
+                    </ion-option-button>
+                    <!--loooks easy enough to implement http://ionicframework.com/docs/api/directive/ionReorderButton/ change above   <ion-list show-reorder="true">
+                    <ion-reorder-button class="ion-navicon"
+                                        on-reorder="moveItem(item, $fromIndex, $toIndex)">
+                    </ion-reorder-button>
+                    -->
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-view>
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
