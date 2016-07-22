@@ -1,8 +1,5 @@
 
-//window.localStorage["session_id"] = '2108e-b416-475b-80a3-73f80e020122';
-angular.module('starter.services' )
-
-
+angular.module('starter.services', [])
 
 
     .service('ItemsSrvc', function($http, $q, $state){
@@ -10,13 +7,13 @@ angular.module('starter.services' )
         this.getItems = function(){
 
 
-            //servers will not be able to return the data to here (protected from cross scripting)
-            //to see how they should work you CAN visit
-            //http://workspace.mobilewebsites.la/output.php
-            //http://workspace.mobilewebsites.la/output.php?show=error
+            //gotoUrl = 'http://workspace.mobilewebsites.la/output.php';
+            //in app.js we declare servername as 'http://workspace.mobilewebsites.la'
+            //unfortunately to prevent cross-scripting attacks this won't work unless from that domain
+            //but to see what tho output looks like visit
+            // http://workspace.mobilewebsites.la/output.php
 
-            gotoUrl = servernameOrig + '/output.php';
-
+            gotoUrl = servername + '/output.php';
 
 
             var deferred = $q.defer();
@@ -49,5 +46,8 @@ angular.module('starter.services' )
 
 
 
+
+
 ;//angular.module
+
 
