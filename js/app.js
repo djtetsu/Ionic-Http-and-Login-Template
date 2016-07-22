@@ -4,14 +4,12 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 
-var debug =1;
+var debug =2;
 if (debug==1) {
-    var servernameOrig = 'http://workspace.com';
+    var servername = 'http://workspace.com';
 } else {
-    var servernameOrig = 'http://workspace.mobilewebsites.la'
+    var servername = 'http://workspace.mobilewebsites.la'
 }
-
-
 
 
 angular.module('starter', ['ionic','starter.controllers','starter.services'])
@@ -47,7 +45,12 @@ angular.module('starter', ['ionic','starter.controllers','starter.services'])
                 controller: 'LoginCtrl'
             })
 
+            .state('register', {
+                url: '/register',
+                templateUrl: 'templates/register.html',
+                controller: 'RegisterCtrl'
 
+            })
 
             .state('tab', {
                 url: "/tab",
@@ -55,6 +58,8 @@ angular.module('starter', ['ionic','starter.controllers','starter.services'])
                 templateUrl: "templates/tabs.html",
                 controller: 'tabsCtrl'
             })
+
+
 
 
             .state('tab.edit', {
@@ -66,7 +71,6 @@ angular.module('starter', ['ionic','starter.controllers','starter.services'])
                     }
                 }
             })
-
         ;
 
 
