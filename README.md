@@ -17,4 +17,4 @@ New code for additional http requests can be made easily with a Ionic/Angular ht
 http://mobilewebsites.la/snippets_db.php
 
 
-Simply input 3 items: verb, noun, method name (usually a combo verb and noun): edit, item, editItems
+Simply input 3 items: verb, noun, method name: edit, item, editItems
