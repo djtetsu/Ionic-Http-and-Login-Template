@@ -12,7 +12,7 @@ http://workspace.mobilewebsites.la/ionic_template/
 
 But wait, there's more!
 
-New code for additional http requests can be made easily with a Ionic/Angular http request code generator:
+New code for additional http requests can be made easily with an Ionic/Angular http request code generator:
 
 http://mobilewebsites.la/snippets_db.php
 
