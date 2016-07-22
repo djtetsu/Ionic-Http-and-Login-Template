@@ -1,33 +1,30 @@
 
-//window.localStorage["session_id"] = '2108e-b416-475b-80a3-73f80e020122';
-angular.module('starter.controllers', ['ngSanitize','firebase'])
+angular.module('starter.controllers', ['ngSanitize'])
 
     .controller("LoginCtrl", ["$scope",  "$ionicPopup", "$state",   "$timeout", "$http",
-        function($scope,   $ionicPopup, $state, $timeout,   $http  ) {
+        function($scope,    $ionicPopup, $state, $timeout,   $http  ) {
 
+            $scope.data = {};
 
             $scope.login = function() {
-                //alert(username);
-                //alert(password);
 
-               //alert('here111');
                 $state.go( 'tab.edit', {}, { reload : true } )
 
 
+
             }
-
-
         }
     ])
 
+    .controller('RegisterCtrl', function($scope, registerService){
 
-//------------------------------------------------------------------
+    })
 
     .controller("tabsCtrl", ["$scope",   '$sce','$state' ,
-        function($scope,   $sce, $state) {
-
+    function($scope,   $sce, $state) {
 
             $scope.signout = function() {
+
 
                 $state.go( 'login', {}, { reload : true } )
 
@@ -36,7 +33,6 @@ angular.module('starter.controllers', ['ngSanitize','firebase'])
         }
     ])
 
-//------------------------------------------------------------------
 
     .controller('EditCtrl', function($scope, ItemsSrvc,  $ionicPopup){
 
@@ -55,9 +51,6 @@ angular.module('starter.controllers', ['ngSanitize','firebase'])
             });
         //}
     })
-
-//------------------------------------------------------------------
-
 
 
 ;//angular.module
