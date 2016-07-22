@@ -1,4 +1,4 @@
-# ionic_http
+# Ionic Http and Login Template
 ionic template for apps that need a login + http connections
 
 uses ionic version 1.3.1
